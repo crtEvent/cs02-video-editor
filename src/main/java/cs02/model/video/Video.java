@@ -19,6 +19,20 @@ public class Video {
         return size;
     }
 
+    public Clip get(int index) {
+        if (head == null || index < 0 || index >= size) return null;
+        if (index == 0) return head.clip;
+
+        var pointer = 1;
+        var currentNode = head;
+        while (currentNode.next != null) {
+            currentNode = currentNode.next;
+            if (index == pointer) break;
+        }
+
+        return currentNode.clip;
+    }
+
     public void add(Clip clip) {
         size++;
         if (head == null) {
