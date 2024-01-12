@@ -33,6 +33,47 @@ public class Video {
         current.next = new VideoNode(clip);
     }
 
+    public void insert(int index, Clip clip) {
+        if (head == null) {
+            size++;
+            head = new VideoNode(clip);
+            return;
+        }
+
+        if (index >= size) {
+            add(clip);
+            return;
+        }
+
+        if (index == 0) {
+            size++;
+            var tempNode = head;
+            head = new VideoNode(clip);
+            head.next = tempNode;
+            return;
+        }
+
+        int pointer = 1;
+        var currentNode = head;
+        while (head.next != null) {
+            if (pointer == index) {
+                break;
+            }
+            pointer++;
+            currentNode = currentNode.next;
+        }
+
+        if (currentNode.next != null) {
+            size++;
+            var temp = currentNode.next;
+            currentNode.next = new VideoNode(clip);
+            currentNode.next.next = temp;
+        } else {
+            size++;
+            currentNode.next = new VideoNode(clip);
+        }
+    }
+
     @Override
     public String toString() {
 

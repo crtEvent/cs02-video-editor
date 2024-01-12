@@ -12,14 +12,15 @@ public class ConsoleController {
 
     private final ClipGenerator clipGenerator;
     private final ConsoleView view;
+    private final Video video;
     private ClipBundle clipBundle;
-    private Video video;
 
     private static final Function<String, String> COMMAND_ERROR_MESSAGE = (String command)
         -> String.format("'%s'는 잘못된 명령어 입니다.", command);
     private static final String HELP_MESSAGE = "[도움말]" + System.lineSeparator()
         + " - clips: 클립 리스트 출력" + System.lineSeparator()
         + " - add <id>: 비디오 리스트 맨 뒤에 클립 추가" + System.lineSeparator()
+        + " - insert <id> <index>: <index> 위치에 클립 추가" + System.lineSeparator()
         + " - exit: 프로그램 종료";
 
     public ConsoleController() {
@@ -68,6 +69,20 @@ public class ConsoleController {
                 video.add(clip);
 
                 yield video.toString();
+            }
+            case Commands.INSERT -> {
+                if (commandComponents.length != 3) {
+                    throw new IllegalArgumentException(COMMAND_ERROR_MESSAGE.apply(command));
+                }
+                try {
+                    Clip clip = clipBundle.findById(commandComponents[1]);
+                    int index = Integer.parseInt(commandComponents[2]);
+                    video.insert(index, clip);
+
+                    yield video.toString();
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("index는 정수만 입력 가능합니다.");
+                }
             }
             case Commands.HELP -> {
                 if (commandComponents.length != 1) {
