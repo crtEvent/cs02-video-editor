@@ -28,6 +28,7 @@ public class Video {
         while (currentNode.next != null) {
             currentNode = currentNode.next;
             if (index == pointer) break;
+            pointer++;
         }
 
         return currentNode.clip;
