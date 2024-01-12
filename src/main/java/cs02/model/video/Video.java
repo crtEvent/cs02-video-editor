@@ -34,6 +34,18 @@ public class Video {
         return currentNode.clip;
     }
 
+    public boolean exist(String id) {
+        var currentNode = head;
+        while (currentNode.next != null) {
+            if (Objects.equals(id, currentNode.clip.id())) {
+                return true;
+            }
+            currentNode = currentNode.next;
+        }
+
+        return Objects.equals(id, currentNode.clip.id());
+    }
+
     public void add(Clip clip) {
         size++;
         if (head == null) {
