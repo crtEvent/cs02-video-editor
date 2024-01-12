@@ -88,6 +88,33 @@ public class Video {
         }
     }
 
+    public void delete(String id) {
+        if (head == null)
+            throw new IllegalArgumentException("'" + id + "'에 해당하는 클립이 없습니다.");
+
+        if (Objects.equals(id, head.clip.id())) {
+            size--;
+            head = head.next;
+            return;
+        }
+
+        var currentNode = head;
+        VideoNode prevNode = head;
+        while (currentNode.next != null) {
+            if (Objects.equals(id, currentNode.next.clip.id())) {
+                size--;
+                if (currentNode.next.next != null) {
+                    prevNode.next.next = currentNode.next.next;
+                } else {
+                    currentNode.next = null;
+                }
+                return;
+            }
+            prevNode = currentNode;
+            currentNode = currentNode.next;
+        }
+    }
+
     @Override
     public String toString() {
 

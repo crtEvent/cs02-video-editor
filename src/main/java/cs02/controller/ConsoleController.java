@@ -21,6 +21,7 @@ public class ConsoleController {
         + " - clips: 클립 리스트 출력" + System.lineSeparator()
         + " - add <id>: 비디오 리스트 맨 뒤에 클립 추가" + System.lineSeparator()
         + " - insert <id> <index>: <index> 위치에 클립 추가" + System.lineSeparator()
+        + " - delete <id> : <id>에 해당하는 클립 제거" + System.lineSeparator()
         + " - exit: 프로그램 종료";
 
     public ConsoleController() {
@@ -83,6 +84,14 @@ public class ConsoleController {
                 } catch (NumberFormatException e) {
                     throw new IllegalArgumentException("index는 정수만 입력 가능합니다.");
                 }
+            }
+            case Commands.DELETE -> {
+                if (commandComponents.length != 2) {
+                    throw new IllegalArgumentException(COMMAND_ERROR_MESSAGE.apply(command));
+                }
+                video.delete(commandComponents[1]);
+
+                yield video.toString();
             }
             case Commands.HELP -> {
                 if (commandComponents.length != 1) {
