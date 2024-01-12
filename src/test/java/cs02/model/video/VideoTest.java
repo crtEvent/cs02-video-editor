@@ -26,7 +26,7 @@ class VideoTest {
     }
 
     @Nested
-    @DisplayName("add 기능 테스트")
+    @DisplayName("get 기능 테스트")
     class get {
         @Test
         @DisplayName("비디오 클립 목록에서 원하는 위치에 있는 클립을 찾을 수 있다.")
@@ -69,6 +69,34 @@ class VideoTest {
                 () -> assertNull(video.get(1)),
                 () -> assertNull(video.get(-1)),
                 () -> assertNull(video.get(100))
+            );
+        }
+    }
+
+    @Nested
+    @DisplayName("exist 기능 테스트")
+    class Exist {
+        @Test
+        @DisplayName("빈 비디오 클립 목록에서 아이디로 클립이 존재하는지 확인할 수 있다.")
+        void success_exist() {
+            var clip1 = clipBundle.clips()[0];
+            var clip2 = clipBundle.clips()[1];
+            var clip3 = clipBundle.clips()[2];
+            var clip4 = clipBundle.clips()[3];
+            var clip5 = clipBundle.clips()[4];
+
+            video.add(clip1);
+            video.add(clip2);
+            video.add(clip3);
+            video.add(clip4);
+            video.add(clip5);
+
+            assertAll(
+                () -> assertTrue(video.exist(clip1.id())),
+                () -> assertTrue(video.exist(clip2.id())),
+                () -> assertTrue(video.exist(clip3.id())),
+                () -> assertTrue(video.exist(clip4.id())),
+                () -> assertTrue(video.exist(clip5.id()))
             );
         }
     }
