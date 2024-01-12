@@ -59,7 +59,7 @@ public class Video {
             return;
         }
 
-        if (index == 0) {
+        if (index <= 0) {
             size++;
             var tempNode = head;
             head = new VideoNode(clip);
