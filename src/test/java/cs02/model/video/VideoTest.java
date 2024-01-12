@@ -34,19 +34,27 @@ class VideoTest {
             var clip1 = clipBundle.clips()[0];
             var clip2 = clipBundle.clips()[1];
             var clip3 = clipBundle.clips()[2];
+            var clip4 = clipBundle.clips()[3];
+            var clip5 = clipBundle.clips()[4];
 
             video.add(clip1);
             video.add(clip2);
             video.add(clip3);
+            video.add(clip4);
+            video.add(clip5);
 
             var actualClip1 = video.get(0);
             var actualClip2 = video.get(1);
             var actualClip3 = video.get(2);
+            var actualClip4 = video.get(3);
+            var actualClip5 = video.get(4);
 
             assertAll(
                 () -> assertEquals(clip1.id(), actualClip1.id()),
                 () -> assertEquals(clip2.id(), actualClip2.id()),
-                () -> assertEquals(clip3.id(), actualClip3.id())
+                () -> assertEquals(clip3.id(), actualClip3.id()),
+                () -> assertEquals(clip4.id(), actualClip4.id()),
+                () -> assertEquals(clip5.id(), actualClip5.id())
             );
         }
 
@@ -131,4 +139,39 @@ class VideoTest {
         }
     }
 
+    @Nested
+    @DisplayName("delete 기능 테스트")
+    class Delete {
+
+        @Test
+        @DisplayName("비디오 클립 목록에서 입력한 아이디에 해당하는 클립을 제거할 수 있다.")
+        void success_delete() {
+            var clip1 = clipBundle.clips()[0];
+            var clip2 = clipBundle.clips()[1];
+            var clip3 = clipBundle.clips()[2];
+            var clip4 = clipBundle.clips()[3];
+            var clip5 = clipBundle.clips()[4];
+
+            video.add(clip1);
+            video.add(clip2);
+            video.add(clip3);
+            video.add(clip4);
+            video.add(clip5);
+
+            assertAll(
+                () -> {
+                    video.delete(clip3.id());
+                    assertEquals(clip4.id(), video.get(2).id());
+                },
+                () -> {
+                    video.delete(clip5.id());
+                    assertNull(video.get(4));
+                },
+                () -> {
+                    video.delete(clip1.id());
+                    assertEquals(clip2.id(), video.get(0).id());
+                }
+            );
+        }
+    }
 }
