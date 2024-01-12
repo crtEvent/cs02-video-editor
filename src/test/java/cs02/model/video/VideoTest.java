@@ -91,4 +91,44 @@ class VideoTest {
         }
     }
 
+    @Nested
+    @DisplayName("insert 기능 테스트")
+    class Insert {
+        @Test
+        @DisplayName("비디오 클립 목록의 원하는 위치에 클립을 삽입할 수 있다.")
+        void success_insert() {
+            var clip1 = clipBundle.clips()[0];
+            var clip2 = clipBundle.clips()[1];
+            var clip3 = clipBundle.clips()[2];
+
+            video.insert(0, clip1);
+            video.insert(0, clip2);
+            video.insert(1, clip3);
+
+            var actualClip1 = video.get(0);
+            var actualClip2 = video.get(1);
+            var actualClip3 = video.get(2);
+
+            assertAll(
+                () -> assertEquals(clip2.id(), actualClip1.id()),
+                () -> assertEquals(clip3.id(), actualClip2.id()),
+                () -> assertEquals(clip1.id(), actualClip3.id())
+            );
+        }
+
+        @Test
+        @DisplayName("비디오 클립 목록의 크기를 넘는 위치에 클립을 삽입할 경우 클립을 목록의 맨 뒤에 추가한다.")
+        void success_insert_to_over_index() {
+            var clip1 = clipBundle.clips()[0];
+            var clip2 = clipBundle.clips()[1];
+
+            video.insert(0, clip1);
+            video.insert(999, clip2);
+
+            var actualClip1 = video.get(1);
+
+            assertEquals(clip2.id(), actualClip1.id());
+        }
+    }
+
 }
