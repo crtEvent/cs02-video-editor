@@ -128,6 +128,15 @@ public class Video {
         }
     }
 
+    public String render() {
+        int length = Stream
+            .iterate(head, Objects::nonNull, node -> node.next)
+            .mapToInt(node -> node.clip.length())
+            .sum();
+
+        return String.format("영상 클립: %2d개%n전체 길이: %2d초", size, length);
+    }
+
     @Override
     public String toString() {
 
