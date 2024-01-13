@@ -170,21 +170,26 @@ class VideoTest {
     @Nested
     @DisplayName("delete 기능 테스트")
     class Delete {
+        Clip clip1, clip2, clip3, clip4, clip5;
 
-        @Test
-        @DisplayName("비디오 클립 목록에서 입력한 아이디에 해당하는 클립을 제거할 수 있다.")
-        void success_delete() {
-            var clip1 = clipBundle.clips()[0];
-            var clip2 = clipBundle.clips()[1];
-            var clip3 = clipBundle.clips()[2];
-            var clip4 = clipBundle.clips()[3];
-            var clip5 = clipBundle.clips()[4];
+        @BeforeEach
+        void init() {
+            clip1 = clipBundle.clips()[0];
+            clip2 = clipBundle.clips()[1];
+            clip3 = clipBundle.clips()[2];
+            clip4 = clipBundle.clips()[3];
+            clip5 = clipBundle.clips()[4];
 
             video.add(clip1);
             video.add(clip2);
             video.add(clip3);
             video.add(clip4);
             video.add(clip5);
+        }
+
+        @Test
+        @DisplayName("비디오 클립 목록에서 입력한 아이디에 해당하는 클립을 제거할 수 있다.")
+        void success_delete() {
 
             assertAll(
                 () -> {
@@ -200,6 +205,13 @@ class VideoTest {
                     assertEquals(clip2.id(), video.get(0).id());
                 }
             );
+        }
+
+        @Test
+        @DisplayName("비디오 클립 목록에 없는 비디오를 삭제하려고 하면 에러가 발생한다.")
+        void fail_delete() {
+            assertThrows(IllegalArgumentException.class,
+                () -> video.delete("????"));
         }
     }
 }

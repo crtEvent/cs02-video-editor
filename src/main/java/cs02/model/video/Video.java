@@ -136,6 +136,7 @@ public class Video {
             prevNode = currentNode;
             currentNode = currentNode.next;
         }
+        throw new IllegalArgumentException("'" + id + "'에 해당하는 클립이 없습니다.");
     }
 
     public String render() {
