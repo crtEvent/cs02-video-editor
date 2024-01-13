@@ -7,12 +7,22 @@ import java.util.stream.Stream;
 
 public class Video {
 
-    VideoNode head;
+    private VideoNode head;
     private int size;
 
     public Video() {
         this.head = null;
         this.size = 0;
+    }
+
+    private static class VideoNode {
+        Clip clip;
+        VideoNode next;
+
+        public VideoNode(Clip clip) {
+            this.clip = clip;
+            this.next = null;
+        }
     }
 
     public int getSize() {
