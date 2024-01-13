@@ -25,10 +25,10 @@ public class ConsoleController {
         + " - render: 비디오의 클립 개수와 총 길이를 보여준다" + System.lineSeparator()
         + " - exit: 프로그램 종료";
 
-    public ConsoleController() {
-        this.clipGenerator = new ClipGenerator(15);
-        this.view = new ConsoleView();
-        this.video = new Video();
+    public ConsoleController(ClipGenerator clipGenerator, ConsoleView view, Video video) {
+        this.clipGenerator = clipGenerator;
+        this.view = view;
+        this.video = video;
     }
 
     public void execute() {

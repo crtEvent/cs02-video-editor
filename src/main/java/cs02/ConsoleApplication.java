@@ -1,11 +1,18 @@
 package cs02;
 
 import cs02.controller.ConsoleController;
+import cs02.model.ClipGenerator;
+import cs02.model.video.Video;
+import cs02.view.ConsoleView;
 
 public class ConsoleApplication {
 
     public static void run() {
-        var controller = new ConsoleController();
+        var controller = new ConsoleController(
+            new ClipGenerator(15),
+            new ConsoleView(),
+            new Video()
+        );
         controller.execute();
     }
 
