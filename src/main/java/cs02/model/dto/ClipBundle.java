@@ -1,13 +1,17 @@
 package cs02.model.dto;
 
+import cs02.model.ClipGenerator;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public record ClipBundle(
-    Clip[] clips,
-    int size
+    Clip[] clips
 ) {
+
+    public ClipBundle(ClipGenerator clipGenerator) {
+        this(clipGenerator.generateClips());
+    }
 
     public Clip findById(String id) {
         return Arrays.stream(clips)

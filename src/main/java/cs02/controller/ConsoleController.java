@@ -1,6 +1,5 @@
 package cs02.controller;
 
-import cs02.model.ClipGenerator;
 import cs02.model.dto.Clip;
 import cs02.model.dto.ClipBundle;
 import cs02.model.video.Video;
@@ -10,10 +9,9 @@ import java.util.function.Function;
 
 public class ConsoleController {
 
-    private final ClipGenerator clipGenerator;
     private final ConsoleView view;
     private final Video video;
-    private ClipBundle clipBundle;
+    private final ClipBundle clipBundle;
 
     private static final Function<String, String> COMMAND_ERROR_MESSAGE = (String command)
         -> String.format("'%s'는 잘못된 명령어 입니다.", command);
@@ -25,14 +23,13 @@ public class ConsoleController {
         + " - render: 비디오의 클립 개수와 총 길이를 보여준다" + System.lineSeparator()
         + " - exit: 프로그램 종료";
 
-    public ConsoleController(ClipGenerator clipGenerator, ConsoleView view, Video video) {
-        this.clipGenerator = clipGenerator;
+    public ConsoleController(ConsoleView view, Video video, ClipBundle clipBundle) {
         this.view = view;
         this.video = video;
+        this.clipBundle = clipBundle;
     }
 
     public void execute() {
-        clipBundle = clipGenerator.generateClips();
         view.printResult(
             String.format("---영상클립 생성---%n%s", clipBundle.toString())
         );

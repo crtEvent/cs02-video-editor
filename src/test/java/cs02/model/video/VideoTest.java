@@ -22,7 +22,7 @@ class VideoTest {
     void init() {
         video = new Video();
         clipGenerator = new ClipGenerator(15);
-        clipBundle = clipGenerator.generateClips();
+        clipBundle = new ClipBundle(clipGenerator.generateClips());
     }
 
     @Nested

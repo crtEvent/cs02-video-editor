@@ -1,7 +1,6 @@
 package cs02.model;
 
 import cs02.model.dto.Clip;
-import cs02.model.dto.ClipBundle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,15 +21,13 @@ public class ClipGenerator {
         this.uniqueIds = new ArrayList<>(size);
     }
 
-    public ClipBundle generateClips() {
-        Clip[] clips = IntStream.range(0, size)
+    public Clip[] generateClips() {
+        return IntStream.range(0, size)
             .mapToObj(i -> new Clip(
                 generateUniqueId(),
                 String.format("제목%03d", i + 1),
                 random.nextInt(1, 16)
             )).toArray(Clip[]::new);
-
-        return new ClipBundle(clips, size);
     }
 
     private String generateUniqueId() {
